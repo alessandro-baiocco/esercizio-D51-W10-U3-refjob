@@ -1,7 +1,7 @@
 import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addFavorites, addJobs } from "../redux/action";
+import { addFavorites, addJobs, removeFavorites } from "../redux/action";
 
 const Job = ({ data }) => {
   const dispatch = useDispatch();
@@ -10,10 +10,7 @@ const Job = ({ data }) => {
   return (
     <Row className="mx-0 mt-3 p-3" style={{ border: "1px solid #00000033", borderRadius: 4 }}>
       <Col xs={3}>
-        <Link to={`/${data.company_name}`}>
-          {data.company_name}{" "}
-          <i className={`bi bi-heart-fill ms-2 ${jobFiltered.length >= 1 ? "d-inline" : "d-none"}`}></i>
-        </Link>
+        <Link to={`/${data.company_name}`}>{data.company_name} </Link>
       </Col>
       <Col xs={9}>
         <a href={data.url} target="_blank" rel="noreferrer">
@@ -22,9 +19,19 @@ const Job = ({ data }) => {
         <Button className="text-light ms-2" variant="info" onClick={() => dispatch(addJobs(data))}>
           segna
         </Button>
-        <Button className="text-light ms-2" variant="success" onClick={() => dispatch(addFavorites(data))}>
-          preferito
-        </Button>
+        {jobFiltered.length >= 1 ? (
+          <Button
+            className="text-light ms-2"
+            variant="success"
+            onClick={() => dispatch(removeFavorites(data.company_name))}
+          >
+            <i className={`bi bi-heart-fill ms-2`}> </i>
+          </Button>
+        ) : (
+          <Button className="text-light ms-2" variant="success" onClick={() => dispatch(addFavorites(data))}>
+            <i className={`bi bi-heart ms-2`}> </i>
+          </Button>
+        )}
       </Col>
     </Row>
   );

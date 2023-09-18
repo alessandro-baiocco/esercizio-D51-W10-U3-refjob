@@ -16,7 +16,7 @@ const favManagment = (state = initialState, action) => {
       return {
         ...state,
 
-        content: state.content.filter((_, i) => i !== action.payload),
+        content: state.content.filter((name) => name.company_name !== action.payload),
       };
 
     default:

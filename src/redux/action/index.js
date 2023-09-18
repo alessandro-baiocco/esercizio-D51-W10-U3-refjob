@@ -17,7 +17,6 @@ export const getJobs = (query) => {
       if (response.ok) {
         const data = await response.json();
         dispatch({ type: GET_JOBS, payload: data });
-        console.log(data);
       } else {
         console.log("Error fetching results");
       }

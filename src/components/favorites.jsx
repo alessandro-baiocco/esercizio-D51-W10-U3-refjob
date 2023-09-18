@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { REMOVE_FAVORITES } from "../redux/action";
+import { REMOVE_FAVORITES, removeFavorites } from "../redux/action";
 
 const Favorites = () => {
   const jobs = useSelector((state) => state.favorites.content);
@@ -19,7 +19,11 @@ const Favorites = () => {
         return (
           <li key={`job-${i}`}>
             {job.title} | {job.job_type} |<Link to={`/${job.company_name}`}>{job.company_name}</Link>
-            <Button className="ms-2 text-light" variant="danger" onClick={() => dispatch(REMOVE_FAVORITES(i))}>
+            <Button
+              className="ms-2 text-light"
+              variant="danger"
+              onClick={() => dispatch(removeFavorites(job.company_name))}
+            >
               <i className="bi bi-trash3"></i>
             </Button>
           </li>
